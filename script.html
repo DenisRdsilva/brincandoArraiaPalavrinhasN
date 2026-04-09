@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Brincando no Arraiá das Palavrinhas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <h1>🎉 Brincando no Arraiá das Palavrinhas 🎉</h1>
+  <div class="container" id="gameContainer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script>
+    // Array com as fases
+    const niveis = [
+      {
+        nivel: "Silábico simples",
+        pergunta: "Qual opção completa a palavra PAM___?",
+        imagem: "/assets/pamonha.png",
+        opcoes: ["ONHA", "OLHA", "OCHA"],
+        resposta: "ONHA"
+      },
+      {
+        nivel: "Rima",
+        pergunta: "Qual palavra rima com BALÃO?",
+        imagem: "/assets/balao.png",
+        opcoes: ["MILHÃO", "BOLA", "CANJICA"],
+        resposta: "MILHÃO"
+      },
+      {
+        nivel: "Identificar palavra",
+        pergunta: "Qual é essa comida típica?",
+        imagem: "/assets/canjica.png",
+        opcoes: ["CANJICA", "PIPOCA", "MILHO"],
+        resposta: "CANJICA"
+      },
+      {
+        nivel: "Identificar palavra",
+        pergunta: "Qual é essa sobremesa?",
+        imagem: "/assets/arrozDoce.png",
+        opcoes: ["ARROZ DOCE", "CURAU", "PAÇOCA"],
+        resposta: "ARROZ DOCE"
+      },
+      {
+        nivel: "Contar sílabas",
+        pergunta: "Quantas sílabas tem a palavra QUADRILHA?",
+        imagem: "/assets/quadrilha.png",
+        opcoes: ["3", "4", "2"],
+        resposta: "3"
+      },
+      {
+        nivel: "Silábico simples",
+        pergunta: "Qual sílaba completa a palavra FO___RA?",
+        imagem: "/assets/fogueira.png",
+        opcoes: ["GUEI", "GUEA", "GUIA"],
+        resposta: "GUEI"
+      },
+      {
+        nivel: "Identificar palavra",
+        pergunta: "Qual é essa comida?",
+        imagem: "/assets/milho.png",
+        opcoes: ["MILHO", "PIPOCA", "PAÇOCA"],
+        resposta: "MILHO"
+      },
+      {
+        nivel: "Rima",
+        pergunta: "Qual palavra rima com CHAPÉU?",
+        imagem: "/assets/chapeu.png",
+        opcoes: ["CHÃO", "TROFÉU", "PALHÃO"],
+        resposta: "CHAPÉU"
+      },
+      {
+        nivel: "Identificar palavra",
+        pergunta: "Qual é esse instrumento musical?",
+        imagem: "/assets/sanfona.png",
+        opcoes: ["SANFONA", "VIOLÃO", "FLAUTA"],
+        resposta: "SANFONA"
+      },
+      {
+        nivel: "Identificar palavra",
+        pergunta: "O que é essa decoração?",
+        imagem: "/assets/bandeirinhas.png",
+        opcoes: ["BANDEIRINHAS", "BALÕES", "FESTÃO"],
+        resposta: "BANDEIRINHAS"
+      }
+    ];
+
+    let indice = 0;
+
+    function carregarPergunta() {
+      const container = document.getElementById("gameContainer");
+      container.innerHTML = "";
+
+      const nivel = niveis[indice];
+
+      const tituloNivel = document.createElement("h2");
+      tituloNivel.innerText = `Nível: ${nivel.nivel}`;
+      container.appendChild(tituloNivel);
+
+      const img = document.createElement("img");
+      img.src = nivel.imagem;
+      img.className = "image-word";
+      img.alt = "Imagem relacionada à pergunta";
+      container.appendChild(img);
+
+      const pergunta = document.createElement("p");
+      pergunta.innerText = nivel.pergunta;
+      container.appendChild(pergunta);
+
+      nivel.opcoes.forEach(opcao => {
+        const botao = document.createElement("div");
+        botao.className = "option";
+        botao.innerText = opcao;
+        botao.onclick = () => verificarResposta(opcao);
+        container.appendChild(botao);
+      });
+    }
+
+    function acertou() {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+    }
+
+    function verificarResposta(respostaSelecionada) {
+      const nivel = niveis[indice];
+      const opcoes = document.querySelectorAll(".option");
+
+      opcoes.forEach(opcao => {
+        if (opcao.innerText === nivel.resposta) {
+          opcao.classList.add("correct");
+          acertou();
+        } else {
+          if (opcao.innerText === respostaSelecionada) {
+            opcao.classList.add("incorrect");
+          }
+        }
+        // Remove o clique após resposta
+        opcao.onclick = null;
+      });
+
+      setTimeout(() => {
+        indice++;
+        if (indice < niveis.length) {
+          carregarPergunta();
+        } else {
+          document.getElementById("gameContainer").innerHTML = "<h2>Você completou o jogo! Viva São João! 🎊</h2>";
+        }
+      }, 1500);
+    }
+
+    carregarPergunta();
+
+  </script>
+</body>
+
+</html>
