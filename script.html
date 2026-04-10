@@ -10,6 +10,7 @@
 <body>
   <h1>🎉 Brincando no Arraiá das Palavrinhas 🎉</h1>
   <div class="container" id="gameContainer"></div>
+  <button class="option container" style="margin-top: 15px" onclick="window.location.href='index.html'">VOLTAR AO MENU</button>
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
   <script>
@@ -69,7 +70,7 @@
         pergunta: "Qual palavra rima com CHAPÉU?",
         imagem: "/assets/chapeu.png",
         opcoes: ["CHÃO", "TROFÉU", "PALHÃO"],
-        resposta: "CHAPÉU"
+        resposta: "TROFÉU"
       },
       {
         nivel: "Identificar palavra",
@@ -109,7 +110,11 @@
       pergunta.innerText = nivel.pergunta;
       container.appendChild(pergunta);
 
-      nivel.opcoes.forEach(opcao => {
+      // Embaralhar as opções
+      // const opcoesRandom = random.shuffle(nivel.opcoes);
+      const opcoesRandom = [...nivel.opcoes].sort(() => Math.random() - 0.5);
+
+      opcoesRandom.forEach(opcao => {
         const botao = document.createElement("div");
         botao.className = "option";
         botao.innerText = opcao;
@@ -131,28 +136,36 @@
       const opcoes = document.querySelectorAll(".option");
 
       opcoes.forEach(opcao => {
-        if (opcao.innerText === nivel.resposta) {
+        // Se clicou na opção errada
+        if (opcao.innerText === respostaSelecionada && respostaSelecionada !== nivel.resposta) {
+          opcao.classList.add("incorrect");
+
+          // 💥 opcional: esconder depois de um tempinho
+          setTimeout(() => {
+            opcao.style.display = "none";
+          }, 500);
+        }
+
+        // Se clicou na correta
+        if (opcao.innerText === nivel.resposta && respostaSelecionada === nivel.resposta) {
           opcao.classList.add("correct");
           acertou();
-        } else {
-          if (opcao.innerText === respostaSelecionada) {
-            opcao.classList.add("incorrect");
-          }
+
+          // trava todos os botões
+          opcoes.forEach(btn => btn.onclick = null);
+
+          setTimeout(() => {
+            indice++;
+            if (indice < niveis.length) {
+              carregarPergunta();
+            } else {
+              document.getElementById("gameContainer").innerHTML =
+                "<h2>Você completou o jogo! Viva São João! 🎊</h2>";
+            }
+          }, 1500);
         }
-        // Remove o clique após resposta
-        opcao.onclick = null;
       });
-
-      setTimeout(() => {
-        indice++;
-        if (indice < niveis.length) {
-          carregarPergunta();
-        } else {
-          document.getElementById("gameContainer").innerHTML = "<h2>Você completou o jogo! Viva São João! 🎊</h2>";
-        }
-      }, 1500);
     }
-
     carregarPergunta();
 
   </script>

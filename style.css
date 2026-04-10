@@ -1,49 +1,272 @@
- body {
-     font-family: Arial, sans-serif;
-     background-color: #fff3cd;
-     text-align: center;
-     padding: 10px;
- }
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;700&display=swap");
 
- h1 {
-     color: #b22222;
- }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Baloo 2", cursive;
+}
 
- .container {
-     margin: 20px auto;
-     max-width: 400px;
- }
+body {
+  background: linear-gradient(to top, #ff7a18, #af002d, #1a2a6c);
+  min-height: 100vh;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  overflow-x: hidden;
+  text-transform: uppercase;
+}
 
- .image-word {
-     width: auto;
-     height: 150px;
-     border: 2px solid #b22222;
-     border-radius: 15px;
-     margin-bottom: 10px;
-     background-color: white;
- }
+/* 🎉 Título */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  margin-top: 10%;
+  animation: bounce 2s infinite;
+}
 
- .option {
-     background-color: #f7c59f;
-     padding: 10px;
-     margin: 10px 5px;
-     border-radius: 8px;
-     cursor: pointer;
-     display: inline-block;
-     min-width: 80px;
-     user-select: none;
-     transition: background-color 0.3s;
-     font-weight: bold;
- }
+button {
+    font-size: 1.4rem;
+}
 
- .option:hover {
-     background-color: #e0a468;
- }
+/* 📦 Container */
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 20px;
+  max-width: 500px;
+  margin: auto;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn 0.8s ease-in-out;
+}
 
- .correct {
-     background-color: #90ee90 !important;
- }
+/* 🖼️ Imagem */
+.image-word {
+  width: 200px;
+  margin: 15px 0;
+  animation: float 3s ease-in-out infinite;
+}
 
- .incorrect {
-     background-color: #ffcccb !important;
- }
+/* ❓ Pergunta */
+p {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+}
+
+/* 🔘 Opções */
+.option {
+  background: #ffd166;
+  color: #5a2a00;
+  padding: 12px;
+  margin: 8px auto;
+  width: 80%;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.option:hover {
+  transform: scale(1.05) rotate(-1deg);
+  background: #ffe08a;
+}
+
+/* ✔️ Correto */
+.correct {
+  background: #06d6a0 !important;
+  color: white;
+  animation: pulse 0.5s ease;
+}
+
+/* ❌ Errado */
+.incorrect {
+  background: #ef476f !important;
+  color: white;
+  animation: shake 0.4s;
+}
+
+/* 🎏 Bandeirinhas no topo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    red 0 20px,
+    yellow 20px 40px,
+    blue 40px 60px,
+    green 60px 80px
+  );
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 40%,
+    95% 60%,
+    90% 40%,
+    85% 60%,
+    80% 40%,
+    75% 60%,
+    70% 40%,
+    65% 60%,
+    60% 40%,
+    55% 60%,
+    50% 40%,
+    45% 60%,
+    40% 40%,
+    35% 60%,
+    30% 40%,
+    25% 60%,
+    20% 40%,
+    15% 60%,
+    10% 40%,
+    5% 60%,
+    0 40%
+  );
+  animation: sway 4s ease-in-out infinite;
+}
+
+/* 🔥 Animações */
+
+/* fade container */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* pular título */
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* acerto */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* erro */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* bandeirinhas balançando */
+@keyframes sway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(1deg);
+  }
+}
+
+/* 📱 Ajustes gerais para telas menores */
+@media (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  .container {
+    width: 95%;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .image-word {
+    width: 150px;
+  }
+
+  .option {
+    width: 95%;
+    font-size: 0.95rem;
+    padding: 10px;
+  }
+}
+
+/* 📲 Telas bem pequenas (tipo celulares menores) */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .image-word {
+    width: 120px;
+  }
+
+  .option {
+    font-size: 0.9rem;
+    padding: 9px;
+  }
+
+  p {
+    font-size: 0.95rem;
+  }
+}
+
+/* 📏 Melhor toque no celular */
+.option {
+  min-height: 48px; /* padrão de acessibilidade para toque */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 🚫 Remove zoom estranho ao clicar */
+html {
+  touch-action: manipulation;
+}
+
+/* 🎯 Evita seleção de texto acidental */
+.option {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
